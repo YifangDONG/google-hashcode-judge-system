@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: #4C8DF5;
+  padding: 5px;
+  color: white;
+}
+
+.title {
+  font-size: 1.25rem
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  flex-grow: 1;
+}
