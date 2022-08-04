@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 import google.hashcode.traffic2021.model.Schedule;
 
-public class ResultAdapter {
+public class SolutionAdapter {
     private final List<List<String>> content;
 
-    public ResultAdapter(List<List<String>> content) {
+    public SolutionAdapter(List<List<String>> content) {
         this.content = content;
     }
 

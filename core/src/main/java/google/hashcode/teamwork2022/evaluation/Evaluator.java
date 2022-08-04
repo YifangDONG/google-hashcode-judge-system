@@ -21,7 +21,7 @@ public class Evaluator {
         this.util = new ProblemUtil(problem);
     }
 
-    public ResultInside getResultInside(List<Assignment> assignments) {
+    public SolutionInside getResultInside(List<Assignment> assignments) {
         int score = 0;
         int nProjectFullScore = 0;
         int nZeroScoreProject = 0;
@@ -71,7 +71,7 @@ public class Evaluator {
             }
         }
 
-        return new ResultInside(
+        return new SolutionInside(
             score,
             assignments.size(),
             nProjectFullScore,

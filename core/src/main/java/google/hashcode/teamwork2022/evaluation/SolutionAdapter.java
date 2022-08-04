@@ -5,10 +5,10 @@ import java.util.List;
 
 import google.hashcode.teamwork2022.model.Assignment;
 
-public class ResultAdapter {
+public class SolutionAdapter {
     private final List<List<String>> content;
 
-    public ResultAdapter(List<List<String>> content) {
+    public SolutionAdapter(List<List<String>> content) {
         this.content = content;
     }
 

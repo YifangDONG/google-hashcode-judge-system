@@ -29,7 +29,7 @@ public class Evaluator {
 
     public long result(List<Schedule> schedules) {
         //immutable----
-        var streetToGreenLightCycle = ResultAdapter.getStreetToGreenLightCycle(schedules);
+        var streetToGreenLightCycle = SolutionAdapter.getStreetToGreenLightCycle(schedules);
         var cars = getCarIdToCar(problem.cars());
         var streetLength = getStreetLength(problem.streets());
         //--immutable
@@ -65,7 +65,7 @@ public class Evaluator {
                         boolean inIntersection =
                             streetId == 0 || carToPassIntersectionTime.get(c) + streetLength.get(street) == t;
                         boolean firstInQueue = streetQueue.get(street).peekFirst() == c;
-                        boolean isGreenLight = ResultAdapter.isGreenLight(t, street, streetToGreenLightCycle);
+                        boolean isGreenLight = SolutionAdapter.isGreenLight(t, street, streetToGreenLightCycle);
 
                         if (inIntersection && firstInQueue && isGreenLight) {
                             carToPassIntersectionTime.put(c, t);
