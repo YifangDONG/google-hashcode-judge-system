@@ -1,7 +1,5 @@
 package google.hashcode.teamwork2022.evaluation;
 
-import java.util.List;
-
 import google.hashcode.utils.IOHelper;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;

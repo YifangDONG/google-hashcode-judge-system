@@ -3,8 +3,10 @@ package google.hashcode.traffic2021.evaluation;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,8 +20,9 @@ public class Evaluator {
     for every second:
         for every car:
             if car isn't arrive destination:
-                if carArriveIntersection and firstInQueue and greenLight:
+                if carArriveIntersection and firstInQueue and noCarBeforePassInThisSecond and greenLight:
                     car pass intersection and go to next street
+                    update status
      */
     private final Problem problem;
 
@@ -46,6 +49,7 @@ public class Evaluator {
         long bonus = 0;
 
         for (int t = 0; t < totalTime; t++) {
+            Set<String> streetHasCarPass = new HashSet<>();
             for (int c = 0; c < nCars; c++) {
                 if (carInStreet.containsKey(c)) {
 
@@ -54,7 +58,7 @@ public class Evaluator {
 
                     boolean carInLastStreet = streetId + 1 == cars.get(c).nPaths();
                     if (carInLastStreet) {
-                        if (carToPassIntersectionTime.get(c) + streetLength.get(street) == t) {
+                        if (carToPassIntersectionTime.get(c) + streetLength.get(street) <= t) {
                             score += problem.score();
                             bonus += totalTime - t;
                             carInStreet.remove(c);
@@ -63,13 +67,16 @@ public class Evaluator {
                     } else {
 
                         boolean inIntersection =
-                            streetId == 0 || carToPassIntersectionTime.get(c) + streetLength.get(street) == t;
-                        boolean firstInQueue = streetQueue.get(street).peekFirst() == c;
+                            streetId == 0 || carToPassIntersectionTime.get(c) + streetLength.get(street) <= t;
+                        boolean firstInQueue =
+                            streetQueue.get(street).peekFirst() == c
+                            && !streetHasCarPass.contains(street);
                         boolean isGreenLight = SolutionAdapter.isGreenLight(t, street, streetToGreenLightCycle);
 
                         if (inIntersection && firstInQueue && isGreenLight) {
+                            streetHasCarPass.add(street);
                             carToPassIntersectionTime.put(c, t);
-                            streetQueue.get(street).pop(); // remove from current street queue
+                            streetQueue.get(street).pollFirst(); // remove from current street queue
 
                             int nextStreetId = carInStreet.get(c) + 1;
                             boolean arriveLastStreet = nextStreetId + 1 == cars.get(c).nPaths();
@@ -81,7 +88,6 @@ public class Evaluator {
                             carInStreet.put(c, nextStreetId);
                         }
                     }
-
                 }
             }
         }
