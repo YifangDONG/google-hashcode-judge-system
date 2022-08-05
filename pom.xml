@@ -18,7 +18,8 @@
 	<modules>
 		<module>core</module>
 		<module>server</module>
-    </modules>
+		<module>shell</module>
+	</modules>
 	
 	<build>
 		<plugins>
