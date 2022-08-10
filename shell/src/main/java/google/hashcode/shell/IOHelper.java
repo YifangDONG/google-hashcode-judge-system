@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class IOHelper {
 
     public static List<List<String>> read(String filePath) {
-        try {
-            return Files.lines(Path.of(filePath))
-                .filter(line -> !line.isBlank())
-                .map(line -> List.of(line.split(" ")))
-                .collect(Collectors.toList());
+        try (var lines = Files.lines(Path.of(filePath))) {
+            return lines
+                    .filter(line -> !line.isBlank())
+                    .map(line -> List.of(line.split(" ")))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
